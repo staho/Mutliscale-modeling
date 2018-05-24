@@ -54,7 +54,7 @@ class CellularAutomaton : PApplet() {
 
     override fun mouseClicked(event: MouseEvent?) {
         println(mouseX, mouseY)
-        var rect = findRectangle(mouseX.toFloat(), mouseY.toFloat())
+        val rect: Rectangle? = findRectangle(mouseX.toFloat(), mouseY.toFloat())
         if(rect != null){
             rect.state = !rect.state
             if (rect.state) fill(0)
