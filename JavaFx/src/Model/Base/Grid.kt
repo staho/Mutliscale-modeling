@@ -2,16 +2,21 @@ package Model.Base
 
 import Model.Interfaces.NeighbourHoodInterface
 
-class Grid(var nXCells: Int, var nYCells: Int, val width: Float, val height: Float, val neighbourhood: NeighbourHoodInterface) {
+class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Double, val neighbourhood: NeighbourHoodInterface) {
 
-    val cellWidth: Float = nXCells/width
-    val cellHeight: Float = nYCells/height
+    val cellWidth: Double = width/nXCells
+    val cellHeight: Double = height/nYCells
 
-    var cells: MutableList<Cell> = mutableListOf()
+    var cells: MutableList<MutableList<Cell>> = mutableListOf()
 
-    fun setCell(x: Float, y: Float) {
-        var cell = Cell(x, y, cellHeight, cellWidth)
-        cells.add(cell)
+    init {
+        for (i in 0 until nXCells){
+            cells.add(mutableListOf())
+            for (j in 0 until nYCells){
+                cells[i].add(j, Cell(i * cellWidth, j * cellHeight, cellHeight, cellWidth))
+            }
+        }
     }
+
 
 }

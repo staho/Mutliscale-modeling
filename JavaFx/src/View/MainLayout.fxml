@@ -6,7 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ViewControllers.MainLayoutController">
    <children>
       <SplitPane dividerPositions="0.23273942093541203" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -30,7 +29,7 @@
                                     <Insets left="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField prefHeight="30.0" prefWidth="95.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <TextField fx:id="yTextField" prefHeight="30.0" prefWidth="95.0" promptText="No of cells in y" text="200" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
@@ -40,7 +39,7 @@
                                     <Insets left="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField GridPane.columnIndex="1">
+                              <TextField promptText="No of cells in x" text="200" GridPane.columnIndex="1" fx:id="xTextField">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
@@ -68,11 +67,12 @@
                         <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
+                  <Button fx:id="startButton" layoutX="14.0" layoutY="557.0" mnemonicParsing="false" onMouseClicked="#handleStartClick" text="Start" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
                </children>
             </AnchorPane>
           <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="705.0">
                <children>
-                  <Canvas height="579.0" layoutX="5.0" layoutY="5.0" width="690.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <Canvas fx:id="canvas" height="600.0" layoutX="5.0" layoutY="5.0" width="700.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                </children>
             </AnchorPane>
         </items>

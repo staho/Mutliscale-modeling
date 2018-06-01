@@ -1,6 +1,6 @@
 package Model.Base
 
-class Cell(val x: Float, val y: Float, val height: Float, val width: Float, val indexI: Int = -1, val indexJ: Int = -1) {
+class Cell(val x: Double, val y: Double, val height: Double, val width: Double, val indexI: Int = -1, val indexJ: Int = -1) {
     val xEnd = x + width
     val yEnd = y + height
     var state = false
