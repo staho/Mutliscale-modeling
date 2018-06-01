@@ -3,8 +3,6 @@ package Model.AutomatonSchemas
 import Model.Base.Grid
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
-import java.awt.image.BufferedImage
-
 
 class CellGrowTask(var gc: GraphicsContext, var grid: Grid) : Runnable{
 

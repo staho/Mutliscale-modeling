@@ -6,7 +6,7 @@ class VonNeumann: NeighbourHoodInterface {
 
     override val name:String = "VonNeumann"
 
-    override fun computeIndexes() {
+    override fun computeIndexes(i: Int, j: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

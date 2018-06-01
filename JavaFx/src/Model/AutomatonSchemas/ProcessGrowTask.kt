@@ -1,4 +1,10 @@
 package Model.AutomatonSchemas
 
-class ProcessGrowTask {
+import Model.Base.Grid
+
+class ProcessGrowTask (var grid: Grid): Runnable {
+
+    override fun run() {
+
+    }
 }

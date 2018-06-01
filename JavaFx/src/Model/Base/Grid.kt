@@ -9,6 +9,9 @@ class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Do
 
     var cells: MutableList<MutableList<Cell>> = mutableListOf()
 
+    @Volatile
+    var cellsToUpdate: MutableList<Cell> = mutableListOf()
+
     init {
         for (i in 0 until nXCells){
             cells.add(mutableListOf())
