@@ -51,6 +51,7 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid, var lock: java.lang.
             val bi = BufferedImage(width.toInt(), height.toInt(), BufferedImage.TYPE_INT_RGB)
             val g2d = bi.createGraphics()
             g2d.background = java.awt.Color.WHITE
+            g2d.fillRect(0, 0, width.toInt(), height.toInt());
             gc.fill = Color.WHITE
             gc.clearRect(0.0,0.0, width, height)
 

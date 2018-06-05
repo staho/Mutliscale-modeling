@@ -47,19 +47,31 @@ class MainLayoutController {
 //        grid = Grid(1,1,2.0,2.0, MooreNeighbourhood(1 ,1))
         initComboboxes()
 
+        val gc = canvas.graphicsContext2D
+        gc.clearRect(0.0,0.0, canvas.width, canvas.height)
+        gc.fill = javafx.scene.paint.Color.WHITE
+        gc.fillRect(0.0,0.0, canvas.width, canvas.height)
+
+        val xNo = xTextField.text.toInt()
+        val yNo = yTextField.text.toInt()
+
+        grid = Grid(xNo, yNo, canvas.width, canvas.height, MooreNeighbourhood(xNo, yNo))
+
     }
 
     @FXML
     fun handleStartClick() {
-
+        val height = canvas.height
+        val width = canvas.width
+//        canvas = Canvas(width, height)
         val xNo = xTextField.text.toInt()
         val yNo = yTextField.text.toInt()
         val gc = canvas.graphicsContext2D
-        gc.clearRect(0.0,0.0, canvas.width, canvas.height)
+        gc.clearRect(0.0,0.0, width, height)
 
 
 
-        grid = Grid(xNo, yNo, canvas.width, canvas.height, MooreNeighbourhood(xNo, yNo))
+//        grid = Grid(xNo, yNo, canvas.width, canvas.height, MooreNeighbourhood(xNo, yNo))
         var cell = grid.cells.get(xNo/2).get(yNo/2)
         cell.state = true
         cell.color = Color(255,0,0)
@@ -91,6 +103,16 @@ class MainLayoutController {
 
     fun initComboboxes() {
         neighbourCombo.items.addAll(neighbourTypes)
+    }
+
+    @FXML
+    fun handleClearClick(){
+        val xNo = xTextField.text.toInt()
+        val yNo = yTextField.text.toInt()
+        val gc = canvas.graphicsContext2D
+        gc.clearRect(0.0,0.0, canvas.width, canvas.height)
+
+        grid = Grid(xNo, yNo, canvas.width, canvas.height, MooreNeighbourhood(xNo, yNo))
     }
 
     @FXML
