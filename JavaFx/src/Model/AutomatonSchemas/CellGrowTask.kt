@@ -48,9 +48,15 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid, var lock: java.lang.
 //
             val nb = grid.neighbourhood
             var x = true
+            val bi = BufferedImage(width.toInt(), height.toInt(), BufferedImage.TYPE_INT_RGB)
+            val g2d = bi.createGraphics()
+            g2d.background = java.awt.Color.WHITE
+            gc.fill = Color.WHITE
+            gc.clearRect(0.0,0.0, width, height)
 
 
-            while(x){
+
+        while(x){
             grid.cells.forEachIndexed { i, cellsRow ->
                     cellsRow.forEachIndexed { j, cell ->
                         if (cell.state) {
@@ -74,22 +80,23 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid, var lock: java.lang.
 
 
 
-            gc.fill = Color.BLACK
-//            println(grid.cellsToUpdate)
+//            gc.fill = Color.BLACK
             for (cell in grid.cellsToUpdate) {
                 if (cell.newState) {
-                    Platform.runLater(Runnable {
-                        gc.fill = cell.color.toFxColor()
-                        gc.fillRect(cell.x, cell.y, cell.width, cell.height)
-                    } )
+                    g2d.color = cell.color.toAwtColor()
+                    g2d.fillRect(cell.x.toInt(), cell.y.toInt(), cell.width.toInt(), cell.height.toInt())
 
                     cell.state = cell.newState
                 }
 
             }
-            Thread.sleep(100)
+
+            gc.drawImage(SwingFXUtils.toFXImage(bi, null), 0.0, 0.0)
+
+
+//            Thread.sleep(100)
             grid.cellsToUpdate.clear()
         }
-        
+
     }
 }

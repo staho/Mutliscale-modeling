@@ -51,23 +51,26 @@ class MainLayoutController {
 
     @FXML
     fun handleStartClick() {
+
         val xNo = xTextField.text.toInt()
         val yNo = yTextField.text.toInt()
         val gc = canvas.graphicsContext2D
+        gc.clearRect(0.0,0.0, canvas.width, canvas.height)
+
 
 
         grid = Grid(xNo, yNo, canvas.width, canvas.height, MooreNeighbourhood(xNo, yNo))
         var cell = grid.cells.get(xNo/2).get(yNo/2)
         cell.state = true
-        cell.color = Color(1,0,0)
+        cell.color = Color(255,0,0)
 
          cell = grid.cells.get(xNo - 1).get(yNo - 1)
         cell.state = true
-        cell.color = Color(0,1,0)
+        cell.color = Color(0,255,0)
 
          cell = grid.cells.get(3).get(4)
         cell.state = true
-        cell.color = Color(0,0,1)
+        cell.color = Color(0,0,255)
 
         cellGrowTask = CellGrowTask(gc, grid, lock)
         val thread = Thread(cellGrowTask)
