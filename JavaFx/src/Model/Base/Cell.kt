@@ -5,6 +5,8 @@ class Cell(val x: Double, val y: Double, val height: Double, val width: Double, 
     val yEnd = y + height
     var state = false
     var newState: Boolean = true
+    lateinit var color: Color
+
 
     public fun checkIfInRect(mouseX: Float, mouseY: Float): Boolean {
         if(mouseX >= x && mouseX <= xEnd) {

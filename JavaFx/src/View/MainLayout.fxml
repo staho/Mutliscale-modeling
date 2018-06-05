@@ -72,7 +72,7 @@
             </AnchorPane>
           <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="705.0">
                <children>
-                  <Canvas fx:id="canvas" height="600.0" layoutX="5.0" layoutY="5.0" width="700.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <Canvas fx:id="canvas" height="600.0" layoutX="5.0" layoutY="5.0" onMouseClicked="#handleMouseClick" width="700.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                </children>
             </AnchorPane>
         </items>

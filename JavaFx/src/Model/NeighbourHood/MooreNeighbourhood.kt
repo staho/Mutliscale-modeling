@@ -3,26 +3,48 @@ package Model.NeighbourHood
 import Model.Base.IndexPoint
 import Model.Interfaces.NeighbourHoodInterface
 
-class MooreNeighbourhood(val nXCells: Int, val nYCells: Int) : NeighbourHoodInterface {
-    val lastX = nXCells - 1
-    val lastY = nYCells - 1
+class MooreNeighbourhood(nXCells: Int, nYCells: Int) : NeighbourHoodInterface {
+    private val lastX = nXCells - 1
+    private val lastY = nYCells - 1
 
     override val name: String = "Moore"
-    var indexes: MutableList<IndexPoint> = mutableListOf()
 
-    override fun computeIndexes(i: Int, j: Int) {
-        checkBoundaries(i, j)
-    }
+    override fun computeIndexes(i: Int, j: Int) :List<IndexPoint> {
+        val indexes: MutableList<IndexPoint> = mutableListOf()
 
-    private fun checkBoundaries(i: Int, j: Int) {
         when (i) {
-            0 -> indexes.add(IndexPoint(lastX, j))
-            lastX -> indexes.add(IndexPoint(0, j))
+            0 -> {
+                indexes.add(IndexPoint(lastX, j))
+                indexes.add(IndexPoint(i + 1, j))
+            }
+            lastX -> {
+                indexes.add(IndexPoint(0, j))
+                indexes.add(IndexPoint(i - 1, j))
+            }
+            else -> {
+                indexes.add(IndexPoint(i - 1, j))
+                indexes.add(IndexPoint(i + 1, j))
+
+            }
         }
 
         when (j) {
-            0 -> indexes.add(IndexPoint(i, lastY))
-            lastY -> indexes.add(IndexPoint(i, 0))
+            0 -> {
+                indexes.add(IndexPoint(i, lastY))
+                indexes.add(IndexPoint(i, j + 1))
+            }
+            lastY -> {
+                indexes.add(IndexPoint(i, 0))
+                indexes.add(IndexPoint(i, j - 1))
+            }
+            else -> {
+                indexes.add(IndexPoint(i, j - 1))
+                indexes.add(IndexPoint(i, j + 1))
+
+            }
         }
+
+        return indexes
     }
+
 }
