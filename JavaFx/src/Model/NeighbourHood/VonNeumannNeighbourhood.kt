@@ -3,7 +3,7 @@ package Model.NeighbourHood
 import Model.Base.IndexPoint
 import Model.Interfaces.NeighbourHoodInterface
 
-class VonNeumann(nXCells: Int, nYCells: Int): NeighbourHoodInterface {
+class VonNeumann(nXCells: Int, nYCells: Int, var periodic: Boolean = true): NeighbourHoodInterface {
     private val lastX = nXCells - 1
     private val lastY = nYCells - 1
     override val name:String = "VonNeumann"
