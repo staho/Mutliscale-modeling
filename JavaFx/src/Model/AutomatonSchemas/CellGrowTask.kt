@@ -5,6 +5,7 @@ import javafx.application.Platform
 import javafx.embed.swing.SwingFXUtils
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
+import java.awt.geom.Rectangle2D
 import java.awt.image.BufferedImage
 import kotlin.concurrent.thread
 
@@ -42,18 +43,14 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid, var lock: java.lang.
     }
 
     private fun updateFromGrid() {
-//        while (grid.cellsToUpdate.size == 0) {
-//            lock.wait()
-//        }
-//
             val nb = grid.neighbourhood
             var x = true
             val bi = BufferedImage(width.toInt(), height.toInt(), BufferedImage.TYPE_INT_RGB)
             val g2d = bi.createGraphics()
             g2d.background = java.awt.Color.WHITE
-            g2d.fillRect(0, 0, width.toInt(), height.toInt());
+//            g2d.fillRect(0, 0, width.toInt(), height.toInt());
             gc.fill = Color.WHITE
-            gc.clearRect(0.0,0.0, width, height)
+//            gc.clearRect(0.0,0.0, width, height)
 
 
 
@@ -61,10 +58,7 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid, var lock: java.lang.
             grid.cells.forEachIndexed { i, cellsRow ->
                     cellsRow.forEachIndexed { j, cell ->
                         if (cell.state) {
-                            val indexes = nb.computeIndexes(i, j)
-                            for (index in indexes) {
-//                        println(index.x)
-
+                            for (index in nb.computeIndexes(i, j)) {
                                 val curCell = grid.cells[index.x][index.y]
                                 if (!curCell.state) {
                                     curCell.newState = true
@@ -80,12 +74,11 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid, var lock: java.lang.
                 if(grid.cellsToUpdate.size.equals(0)) x = false
 
 
-
-//            gc.fill = Color.BLACK
             for (cell in grid.cellsToUpdate) {
                 if (cell.newState) {
                     g2d.color = cell.color.toAwtColor()
-                    g2d.fillRect(cell.x.toInt(), cell.y.toInt(), cell.width.toInt(), cell.height.toInt())
+                    var rect = Rectangle2D.Double(cell.x, cell.y, cell.width, cell.height)
+                    g2d.fill(rect)
 
                     cell.state = cell.newState
                 }
@@ -94,8 +87,6 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid, var lock: java.lang.
 
             gc.drawImage(SwingFXUtils.toFXImage(bi, null), 0.0, 0.0)
 
-
-//            Thread.sleep(100)
             grid.cellsToUpdate.clear()
         }
 

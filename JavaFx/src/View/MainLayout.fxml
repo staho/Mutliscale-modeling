@@ -6,11 +6,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ViewControllers.MainLayoutController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ViewControllers.MainLayoutController">
    <children>
-      <SplitPane dividerPositions="0.23273942093541203" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.23273942093541203" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane maxWidth="180.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane maxWidth="180.0" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1000.0">
                <children>
                   <VBox prefHeight="62.0" prefWidth="180.0">
                      <children>
@@ -29,7 +29,7 @@
                                     <Insets left="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField fx:id="yTextField" prefHeight="30.0" prefWidth="95.0" promptText="No of cells in y" text="200" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <TextField fx:id="yTextField" onKeyReleased="#handleNoChange" prefHeight="30.0" prefWidth="95.0" promptText="No of cells in y" text="200" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
@@ -39,7 +39,7 @@
                                     <Insets left="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField promptText="No of cells in x" text="200" GridPane.columnIndex="1" fx:id="xTextField">
+                              <TextField onKeyReleased="#handleNoChange" promptText="No of cells in x" text="200" GridPane.columnIndex="1" fx:id="xTextField">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
@@ -48,7 +48,7 @@
                         </GridPane>
                      </children>
                   </VBox>
-                  <GridPane layoutX="5.0" layoutY="113.0" prefHeight="107.0" prefWidth="171.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="113.0">
+                  <GridPane layoutX="5.0" layoutY="118.0" prefHeight="171.0" prefWidth="171.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="118.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="68.0" minWidth="10.0" prefWidth="68.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="60.0" prefWidth="99.0" />
@@ -57,22 +57,25 @@
                         <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ComboBox fx:id="neighbourCombo" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="neighbourCombo" onHiding="#handleNbChoose" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" />
                         <Label text="Neighbour" />
                         <Label text="BCs" GridPane.rowIndex="2" />
-                        <Label text="Randomization" GridPane.rowIndex="1" />
-                        <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Random #" GridPane.rowIndex="3" />
                         <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="randomizeField" onKeyPressed="#handleRandomEnter" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Button mnemonicParsing="false" onMouseClicked="#handleRandomButton" prefHeight="25.0" prefWidth="102.0" text="Randomize" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                   <Button fx:id="startButton" layoutX="14.0" layoutY="557.0" mnemonicParsing="false" onMouseClicked="#handleStartClick" text="Start" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
                </children>
             </AnchorPane>
-          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="705.0">
+          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="850.0">
                <children>
-                  <Canvas fx:id="canvas" height="600.0" layoutX="5.0" layoutY="5.0" onMouseClicked="#handleMouseClick" width="700.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <Canvas fx:id="canvas" height="790.0" onMouseClicked="#handleMouseClick" width="840.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                </children>
             </AnchorPane>
         </items>

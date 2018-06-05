@@ -2,7 +2,7 @@ package Model.Base
 
 import Model.Interfaces.NeighbourHoodInterface
 
-class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Double, val neighbourhood: NeighbourHoodInterface) {
+class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Double, var neighbourhood: NeighbourHoodInterface) {
 
     val cellWidth: Double = width/nXCells
     val cellHeight: Double = height/nYCells
@@ -19,6 +19,13 @@ class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Do
                 cells[i].add(j, Cell(i * cellWidth, j * cellHeight, cellHeight, cellWidth))
             }
         }
+    }
+
+    fun findCell(x: Double, y: Double): Cell {
+        val i = Math.floor(x/cellWidth).toInt()
+        val j = Math.floor((y/cellHeight)).toInt()
+
+        return cells[i][j]
     }
 
 
