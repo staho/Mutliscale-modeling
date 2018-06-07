@@ -63,11 +63,11 @@
                      <children>
                         <ComboBox fx:id="neighbourCombo" onHiding="#handleNbChoose" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" />
                         <Label text="Neighbour" />
-                        <Label text="BCs" GridPane.rowIndex="2" />
+                        <Label text="Edges" GridPane.rowIndex="2" />
                         <Label text="Random #" GridPane.rowIndex="3" />
-                        <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="randomizeField" onKeyPressed="#handleRandomEnter" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Button mnemonicParsing="false" onMouseClicked="#handleRandomButton" prefHeight="25.0" prefWidth="102.0" text="Randomize" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <CheckBox fx:id="bcsCheckBox" mnemonicParsing="false" onMouseClicked="#handleBcsChange" text="Open BCs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                   <Button fx:id="startButton" layoutX="14.0" layoutY="557.0" mnemonicParsing="false" onMouseClicked="#handleStartClick" text="Start" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />

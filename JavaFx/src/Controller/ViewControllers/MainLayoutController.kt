@@ -1,25 +1,20 @@
 package Controller.ViewControllers
 
 import Model.AutomatonSchemas.CellGrowTask
-import Model.AutomatonSchemas.ProcessGrowTask
 import Model.Base.Color
 import Model.Base.Grid
+import Model.Interfaces.NeighbourHoodInterface
 import Model.NeighbourHood.MooreNeighbourhood
 import Model.NeighbourHood.VonNeumann
-import javafx.embed.swing.SwingFXUtils
-import javafx.event.Event
-import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
 import javafx.scene.canvas.Canvas
-import javafx.scene.control.Cell
+import javafx.scene.control.CheckBox
+import javafx.scene.control.RadioButton
 import javafx.scene.control.TextField
-import javafx.scene.input.InputEvent
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
-import java.awt.geom.Rectangle2D
-import java.awt.image.BufferedImage
 import java.util.*
 
 class MainLayoutController {
@@ -41,11 +36,14 @@ class MainLayoutController {
     private lateinit var grid: Grid
 
     private lateinit var cellGrowTask: CellGrowTask
-    private lateinit var processGrowTask: ProcessGrowTask
-    val lock: java.lang.Object = Object()
+    private lateinit var neighbourhood: NeighbourHoodInterface
+    private var bcs: Boolean = true
 
     @FXML
     private lateinit var xTextField: TextField
+
+    @FXML
+    private lateinit var bcsCheckBox: CheckBox
 
     @FXML
     private lateinit var yTextField: TextField
@@ -65,7 +63,9 @@ class MainLayoutController {
         val xNo = xTextField.text.toInt()
         val yNo = yTextField.text.toInt()
 
-        grid = Grid(xNo, yNo, canvas.width, canvas.height, MooreNeighbourhood(xNo, yNo))
+        neighbourhood = MooreNeighbourhood(xNo, yNo, bcs)
+
+        grid = Grid(xNo, yNo, canvas.width, canvas.height, neighbourhood)
 
     }
 
@@ -77,7 +77,7 @@ class MainLayoutController {
         val gc = canvas.graphicsContext2D
         gc.clearRect(0.0,0.0, width, height)
 
-        cellGrowTask = CellGrowTask(gc, grid, lock)
+        cellGrowTask = CellGrowTask(gc, grid)
         val thread = Thread(cellGrowTask)
 
         thread.start()
@@ -102,8 +102,9 @@ class MainLayoutController {
         val yNo = yTextField.text.toInt()
         val gc = canvas.graphicsContext2D
         gc.clearRect(0.0,0.0, canvas.width, canvas.height)
+        handleNbChoose()
 
-        grid = Grid(xNo, yNo, canvas.width, canvas.height, MooreNeighbourhood(xNo, yNo))
+        grid = Grid(xNo, yNo, canvas.width, canvas.height, neighbourhood)
     }
 
     @FXML
@@ -134,7 +135,8 @@ class MainLayoutController {
         try {
             val xNo = xTextField.text.toInt()
             val yNo = yTextField.text.toInt()
-            grid = Grid(xNo, yNo, canvas.width, canvas.height, MooreNeighbourhood(xNo, yNo))
+            handleNbChoose()
+            grid = Grid(xNo, yNo, canvas.width, canvas.height, neighbourhood)
 
         } catch (except: Exception) {
         }
@@ -171,14 +173,28 @@ class MainLayoutController {
 
     @FXML
     fun handleNbChoose() {
-        val xNo = xTextField.text.toInt()
-        val yNo = yTextField.text.toInt()
-        val index = neighbourCombo.selectionModel.selectedIndex
-        when(index) {
-            0 ->  grid.neighbourhood = MooreNeighbourhood(xNo, yNo)
-            1 -> grid.neighbourhood = VonNeumann(xNo, yNo)
+        try{
+            val xNo = xTextField.text.toInt()
+            val yNo = yTextField.text.toInt()
+            val index = neighbourCombo.selectionModel.selectedIndex
+            when(index) {
+                0 ->  grid.neighbourhood = MooreNeighbourhood(xNo, yNo)
+                1 -> grid.neighbourhood = VonNeumann(xNo, yNo)
+            }
+            println(neighbourTypes[index])
+        } catch (e: Exception){
+
         }
+
     }
+
+    @FXML
+    fun handleBcsChange(){
+
+        bcs = bcsCheckBox.isSelected
+        handleNbChoose()
+    }
+
 
 
 }

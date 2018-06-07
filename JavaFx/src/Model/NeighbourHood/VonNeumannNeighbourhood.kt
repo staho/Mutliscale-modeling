@@ -19,8 +19,77 @@ class VonNeumann(nXCells: Int, nYCells: Int, var periodic: Boolean = true): Neig
                     }
                 }
             }
+        } else if (i == 0) {
+            if(j != 0 && j != lastY) {
+                indexes.add(IndexPoint(i, j - 1))
+                indexes.add(IndexPoint(i + 1, j - 1))
+                indexes.add(IndexPoint(i + 1, j + 1))
+                indexes.add(IndexPoint(i + 1, j))
+                indexes.add(IndexPoint(i, j + 1))
+                if(periodic){
+                    indexes.add(IndexPoint(lastX, j - 1))
+                    indexes.add(IndexPoint(lastX, j))
+                    indexes.add(IndexPoint(lastX, j + 1))
+
+                }
+            } else if (j == 0) {
+                indexes.add(IndexPoint(i + 1, j))
+                indexes.add(IndexPoint(i + 1, j + 1))
+                indexes.add(IndexPoint(i, j + 1))
+                if(periodic) {
+                    indexes.add(IndexPoint(lastX, j))
+                    indexes.add(IndexPoint(lastX, j + 1))
+                    indexes.add(IndexPoint(i, lastY))
+                    indexes.add(IndexPoint(i + 1, lastY))
+                }
+            } else if (j == lastY) {
+                indexes.add(IndexPoint(i + 1, j))
+                indexes.add(IndexPoint(i + 1, j - 1))
+                indexes.add(IndexPoint(i, j - 1))
+                if(periodic){
+                    indexes.add(IndexPoint(i, 0))
+                    indexes.add(IndexPoint(i + 1, 0))
+                    indexes.add(IndexPoint(lastX, j))
+                    indexes.add(IndexPoint(lastX, j - 1))
+                }
+            }
+
+        } else if(i == lastX){
+            if(j != 0 && j != lastY) {
+                indexes.add(IndexPoint(i, j - 1))
+                indexes.add(IndexPoint(i - 1, j - 1))
+                indexes.add(IndexPoint(i - 1, j))
+                indexes.add(IndexPoint(i - 1, j + 1))
+                indexes.add(IndexPoint(i, j + 1))
+                if(periodic){
+                    indexes.add(IndexPoint(0, j - 1))
+                    indexes.add(IndexPoint(0, j))
+                    indexes.add(IndexPoint(0, j + 1))
+
+                }
+            } else if (j == 0) {
+                indexes.add(IndexPoint(i - 1, j))
+                indexes.add(IndexPoint(i - 1, j + 1))
+                indexes.add(IndexPoint(i, j + 1))
+                if(periodic) {
+                    indexes.add(IndexPoint(0, j))
+                    indexes.add(IndexPoint(0, j + 1))
+                    indexes.add(IndexPoint(i, lastY))
+                    indexes.add(IndexPoint(i - 1, lastY))
+                }
+            } else if (j == lastY) {
+                indexes.add(IndexPoint(i - 1, j))
+                indexes.add(IndexPoint(i - 1, j - 1))
+                indexes.add(IndexPoint(i, j - 1))
+                if(periodic){
+                    indexes.add(IndexPoint(i, 0))
+                    indexes.add(IndexPoint(i - 1, 0))
+                    indexes.add(IndexPoint(0, j))
+                    indexes.add(IndexPoint(0, j - 1))
+                }
+            }
         }
-        
+
         return indexes
     }
 }
