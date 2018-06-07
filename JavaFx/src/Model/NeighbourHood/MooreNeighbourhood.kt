@@ -11,7 +11,6 @@ class MooreNeighbourhood(nXCells: Int, nYCells: Int, var periodic: Boolean = tru
 
     override fun computeIndexes(i: Int, j: Int) :List<IndexPoint> {
         val indexes: MutableList<IndexPoint> = mutableListOf()
-
         when (i) {
             0 -> {
                 if(periodic) indexes.add(IndexPoint(lastX, j))

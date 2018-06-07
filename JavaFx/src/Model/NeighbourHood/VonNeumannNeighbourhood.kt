@@ -14,7 +14,7 @@ class VonNeumann(nXCells: Int, nYCells: Int, var periodic: Boolean = true): Neig
         if(i in 1 until lastX && j in 1 until lastY) {
             for(iterX in i-1..i+1){
                 for(iterY in j-1..j+1){
-                    if(iterX != i && iterY != j) {
+                    if (!(iterX == i && iterY == j)) {
                         indexes.add(IndexPoint(iterX, iterY))
                     }
                 }

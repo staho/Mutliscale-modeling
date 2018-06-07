@@ -20,8 +20,10 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid) : Runnable{
 
 
     private fun updateFromGrid() {
+            gc.clearRect(0.0,0.0, width, height)
             val nb = grid.neighbourhood
             var x = true
+            var first = true
             val bi = BufferedImage(width.toInt(), height.toInt(), BufferedImage.TYPE_INT_RGB)
             val g2d = bi.createGraphics()
             g2d.background = java.awt.Color.WHITE
@@ -29,10 +31,12 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid) : Runnable{
 
 
         while(x){
+            var milis = System.currentTimeMillis()
             grid.cells.forEachIndexed { i, cellsRow ->
                     cellsRow.forEachIndexed { j, cell ->
                         if (cell.state) {
-                            for (index in nb.computeIndexes(i, j)) {
+                            var indexes = nb.computeIndexes(i, j)
+                            for (index in indexes) {
                                 val curCell = grid.cells[index.x][index.y]
                                 if (!curCell.state) {
                                     curCell.newState = true
@@ -40,13 +44,20 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid) : Runnable{
                                     grid.cellsToUpdate.add(curCell)
                                 }
                             }
-                            grid.cellsToUpdate.add(cell)
+                            if(first){
+                                cell.newState = true
+                                grid.cellsToUpdate.add(cell)
+                            }
                         }
                     }
 
-            }
-            if(grid.cellsToUpdate.isEmpty()) x = false
+                }
+            if(first) first = false
+            var milis2 = System.currentTimeMillis()
+            println(milis2 - milis)
 
+
+            if(grid.cellsToUpdate.isEmpty()) x = false
 
             for (cell in grid.cellsToUpdate) {
                 if (cell.newState) {
@@ -60,6 +71,7 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid) : Runnable{
 
             gc.drawImage(SwingFXUtils.toFXImage(bi, null), 0.0, 0.0)
             grid.cellsToUpdate.clear()
+
         }
 
     }

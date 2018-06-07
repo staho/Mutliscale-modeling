@@ -55,6 +55,8 @@ class MainLayoutController {
     fun initialize() {
         initComboboxes()
 
+        bcsCheckBox.isSelected = true
+
         val gc = canvas.graphicsContext2D
         gc.clearRect(0.0,0.0, canvas.width, canvas.height)
         gc.fill = javafx.scene.paint.Color.WHITE
@@ -137,6 +139,7 @@ class MainLayoutController {
             val yNo = yTextField.text.toInt()
             handleNbChoose()
             grid = Grid(xNo, yNo, canvas.width, canvas.height, neighbourhood)
+            canvas.graphicsContext2D.clearRect(0.0, 0.0, canvas.width, canvas.height)
 
         } catch (except: Exception) {
         }
@@ -152,6 +155,7 @@ class MainLayoutController {
 
     @FXML
     fun handleRandomButton() {
+
         randomizer()
     }
 
@@ -178,9 +182,15 @@ class MainLayoutController {
             val yNo = yTextField.text.toInt()
             val index = neighbourCombo.selectionModel.selectedIndex
             when(index) {
-                0 ->  grid.neighbourhood = MooreNeighbourhood(xNo, yNo)
-                1 -> grid.neighbourhood = VonNeumann(xNo, yNo)
+                0 -> {
+                    grid.neighbourhood = MooreNeighbourhood(xNo, yNo, bcs)
+                }
+                1 -> {
+                    grid.neighbourhood = VonNeumann(xNo, yNo, bcs)
+                }
             }
+            neighbourhood = grid.neighbourhood
+
             println(neighbourTypes[index])
         } catch (e: Exception){
 
@@ -190,7 +200,6 @@ class MainLayoutController {
 
     @FXML
     fun handleBcsChange(){
-
         bcs = bcsCheckBox.isSelected
         handleNbChoose()
     }
