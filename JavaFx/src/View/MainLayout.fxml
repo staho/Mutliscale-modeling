@@ -81,4 +81,7 @@
         </items>
       </SplitPane>
    </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 </AnchorPane>
