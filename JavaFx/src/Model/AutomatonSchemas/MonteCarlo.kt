@@ -1,24 +1,26 @@
 package Model.AutomatonSchemas
 
 import Model.Base.Grid
+import Model.Base.IndexPoint
+import Model.Base.McPreferences
 import javafx.embed.swing.SwingFXUtils
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
 import java.awt.geom.Rectangle2D
 import java.awt.image.BufferedImage
+import java.util.*
 
-class MonteCarlo(var gc: GraphicsContext, var grid: Grid): Runnable {
+class MonteCarlo(var gc: GraphicsContext, var grid: Grid, val prefs: McPreferences = McPreferences()): Runnable {
     val width = gc.canvas.width
     val height = gc.canvas.height
 
     override fun run() {
-
+        monteCarlo()
     }
 
     private fun monteCarlo() {
         val nb = grid.neighbourhood
         var x = true
-        var first = true
         val bi = BufferedImage(width.toInt(), height.toInt(), BufferedImage.TYPE_INT_RGB)
         val g2d = bi.createGraphics()
         g2d.background = java.awt.Color.WHITE
@@ -26,41 +28,44 @@ class MonteCarlo(var gc: GraphicsContext, var grid: Grid): Runnable {
 
 
         while(x){
-            var milis = System.currentTimeMillis()
             grid.cells.forEachIndexed { i, cellsRow ->
                 cellsRow.forEachIndexed { j, cell ->
-                    if (cell.state) {
-                        var indexes = nb.computeIndexes(i, j)
-                        for (index in indexes) {
-                            val curCell = grid.cells[index.x][index.y]
-                            if (!curCell.state) {
-                                curCell.newState = true
-                                curCell.color = cell.color
-                                grid.cellsToUpdate.add(curCell)
+                    val indexes = nb.computeIndexes(i, j)
+
+                    if (cell.state && indexes.isNotEmpty()) {
+                        val currEnergy = calculateEnergy(indexes, i, j)
+
+                        var newId: Int
+                        var newEnergy: Int
+
+                        loop@do {
+                            newId = randomizeCell(indexes)
+                            newEnergy = calculateEnergy(indexes, newId)
+
+                            if(newEnergy <= currEnergy){
+                                grid.cellsToUpdate.add(cell)
+                                break@loop
                             }
-                        }
-                        if(first){
-                            cell.newState = true
-                            grid.cellsToUpdate.add(cell)
-                        }
+
+                        } while (!prefs.oneTry)
+
+
+                        cell.ID = newId
+                        println(newId)
+                        cell.color = grid.cellIdToColor[cell.ID]!!
+
+
                     }
                 }
 
             }
-            if(first) first = false
-            var milis2 = System.currentTimeMillis()
-            println(milis2 - milis)
-
 
             if(grid.cellsToUpdate.isEmpty()) x = false
 
             for (cell in grid.cellsToUpdate) {
-                if (cell.newState) {
-                    g2d.color = cell.color.toAwtColor()
-                    val rect = Rectangle2D.Double(cell.x, cell.y, cell.width, cell.height)
-                    g2d.fill(rect)
-                    cell.state = cell.newState
-                }
+                g2d.color = cell.color.toAwtColor()
+                val rect = Rectangle2D.Double(cell.x, cell.y, cell.width, cell.height)
+                g2d.fill(rect)
 
             }
 
@@ -69,5 +74,53 @@ class MonteCarlo(var gc: GraphicsContext, var grid: Grid): Runnable {
 
         }
 
+    }
+
+    private fun calculateEnergy(indexes: List<IndexPoint>, i: Int, j: Int) : Int {
+        var energy = 0
+        val cellId = grid.cells[i][j].ID
+
+        for(index in indexes){
+            if(grid.cells[index.x][index.y].ID != cellId) {
+                energy++
+            }
+        }
+
+        return energy
+
+    }
+
+    private fun calculateEnergy(indexes: List<IndexPoint>, cellId: Int) : Int {
+        var energy = 0
+
+        for(index in indexes){
+            if(grid.cells[index.x][index.y].ID != cellId) {
+                energy++
+            }
+        }
+
+        return energy
+
+    }
+
+    private fun randomizeCell(indexes: List<IndexPoint>): Int {
+        val random = Random()
+        if(prefs.chooseMaxNb){
+            var maxNb = grid.cells[indexes[0].x][indexes[0].y].ID
+            var minNb = grid.cells[indexes[0].x][indexes[0].y].ID
+            for (index in indexes){
+                var tempId = grid.cells[index.x][index.y].ID
+
+                if (tempId >= maxNb)
+                    maxNb = tempId
+                if(tempId < minNb)
+                    minNb = tempId
+            }
+
+            return random.nextInt((maxNb - minNb) + 1) + minNb
+
+        } else {
+            return random.nextInt(grid.cellsCounter.size)
+        }
     }
 }

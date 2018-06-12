@@ -1,8 +1,10 @@
 package Controller.ViewControllers
 
 import Model.AutomatonSchemas.CellGrowTask
+import Model.AutomatonSchemas.MonteCarlo
 import Model.Base.Color
 import Model.Base.Grid
+import Model.Base.McPreferences
 import Model.Interfaces.NeighbourHoodInterface
 import Model.NeighbourHood.MooreNeighbourhood
 import Model.NeighbourHood.VonNeumann
@@ -107,6 +109,14 @@ class MainLayoutController {
         handleNbChoose()
 
         grid = Grid(xNo, yNo, canvas.width, canvas.height, neighbourhood)
+    }
+
+    @FXML
+    fun handleMonteCarloClick() {
+        val mctask = MonteCarlo(canvas.graphicsContext2D, grid, McPreferences(false, true))
+        val thread = Thread(mctask)
+
+        thread.start()
     }
 
     @FXML

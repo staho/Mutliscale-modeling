@@ -11,6 +11,8 @@ class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Do
 
     var cellsCounter: MutableMap<Int, Int> = mutableMapOf()
 
+    var cellIdToColor: MutableMap<Int, Color> = mutableMapOf()
+
     @Volatile
     var cellsToUpdate: MutableList<Cell> = mutableListOf()
 
@@ -35,7 +37,8 @@ class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Do
         cell.state = state
         cell.color = color
         cell.ID = this.cellsCounter.size
-        this.cellsCounter.put(cell.ID, 1)
+        this.cellsCounter[cell.ID] = 1
+        this.cellIdToColor[cell.ID] = color
 
         return cell
     }
@@ -44,7 +47,9 @@ class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Do
         cell.state = state
         cell.color = color
         cell.ID = this.cellsCounter.size
-        this.cellsCounter.put(cell.ID, 1)
+        this.cellsCounter[cell.ID] = 1
+        this.cellIdToColor[cell.ID] = color
+
     }
 
 

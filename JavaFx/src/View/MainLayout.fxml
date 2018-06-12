@@ -71,6 +71,7 @@
                      </children>
                   </GridPane>
                   <Button fx:id="startButton" layoutX="14.0" layoutY="557.0" mnemonicParsing="false" onMouseClicked="#handleStartClick" text="Start" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+                  <Button layoutX="65.0" layoutY="759.0" mnemonicParsing="false" onMouseClicked="#handleMonteCarloClick" text="McHammer" />
                </children>
             </AnchorPane>
           <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="850.0">
