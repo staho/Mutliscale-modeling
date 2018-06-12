@@ -9,6 +9,8 @@ class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Do
 
     var cells: MutableList<MutableList<Cell>> = mutableListOf()
 
+    var cellsCounter: MutableMap<Int, Int> = mutableMapOf()
+
     @Volatile
     var cellsToUpdate: MutableList<Cell> = mutableListOf()
 
@@ -26,6 +28,23 @@ class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Do
         val j = Math.floor((y/cellHeight)).toInt()
 
         return cells[i][j]
+    }
+
+    fun addCell(i: Int, j: Int, color: Color, state: Boolean = true): Cell {
+        val cell = this.cells[i][j]
+        cell.state = state
+        cell.color = color
+        cell.ID = this.cellsCounter.size
+        this.cellsCounter.put(cell.ID, 1)
+
+        return cell
+    }
+
+    fun addCell(cell: Cell, color: Color, state: Boolean = true) {
+        cell.state = state
+        cell.color = color
+        cell.ID = this.cellsCounter.size
+        this.cellsCounter.put(cell.ID, 1)
     }
 
 

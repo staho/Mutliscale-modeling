@@ -117,8 +117,10 @@ class MainLayoutController {
         val random = Random()
 
         var cell = grid.findCell(x, y)
-        cell.state = true
-        cell.color = Color(random.nextInt(255),random.nextInt(255),random.nextInt(255))
+        val color = Color(random.nextInt(255),random.nextInt(255),random.nextInt(255))
+
+        grid.addCell(cell, color)
+        println(cell.ID)
 
         drawRectangle(cell)
 
@@ -165,9 +167,10 @@ class MainLayoutController {
             val rand = Random()
 
             for (i in 0 until randomNo) {
-                val cell = grid.cells[rand.nextInt(grid.nXCells)][rand.nextInt(grid.nYCells)]
-                cell.state = true
-                cell.color = Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255))
+                val i = rand.nextInt(grid.nXCells)
+                val j = rand.nextInt(grid.nYCells)
+                val color = Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255))
+                val cell = grid.addCell(i, j, color)
                 drawRectangle(cell)
             }
         } catch (e: Exception){

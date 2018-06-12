@@ -31,16 +31,21 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid) : Runnable{
 
 
         while(x){
-            var milis = System.currentTimeMillis()
             grid.cells.forEachIndexed { i, cellsRow ->
                     cellsRow.forEachIndexed { j, cell ->
                         if (cell.state) {
-                            var indexes = nb.computeIndexes(i, j)
+                            val indexes = nb.computeIndexes(i, j)
                             for (index in indexes) {
                                 val curCell = grid.cells[index.x][index.y]
                                 if (!curCell.state) {
                                     curCell.newState = true
                                     curCell.color = cell.color
+                                    curCell.ID = cell.ID
+
+
+                                    grid.cellsCounter[cell.ID] = grid.cellsCounter[cell.ID]!!.plus(1)
+
+                                    println("Cell id=${cell.ID}: ${grid.cellsCounter[cell.ID]}")
                                     grid.cellsToUpdate.add(curCell)
                                 }
                             }
@@ -53,9 +58,6 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid) : Runnable{
 
                 }
             if(first) first = false
-            var milis2 = System.currentTimeMillis()
-            println(milis2 - milis)
-
 
             if(grid.cellsToUpdate.isEmpty()) x = false
 
