@@ -48,12 +48,14 @@
                         </GridPane>
                      </children>
                   </VBox>
-                  <GridPane layoutX="5.0" layoutY="118.0" prefHeight="171.0" prefWidth="171.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="118.0">
+                  <GridPane layoutX="5.0" layoutY="118.0" prefHeight="235.0" prefWidth="171.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="118.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="68.0" minWidth="10.0" prefWidth="68.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="60.0" prefWidth="99.0" />
                     </columnConstraints>
                     <rowConstraints>
+                        <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -68,10 +70,15 @@
                         <TextField fx:id="randomizeField" onKeyPressed="#handleRandomEnter" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Button mnemonicParsing="false" onMouseClicked="#handleRandomButton" prefHeight="25.0" prefWidth="102.0" text="Randomize" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <CheckBox fx:id="bcsCheckBox" mnemonicParsing="false" onMouseClicked="#handleBcsChange" text="Open BCs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="idChooseComboBox" onHiding="#handleIdSelectionChange" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="ID choose" GridPane.rowIndex="5" />
+                        <Label text="One try" GridPane.rowIndex="6" />
+                        <CheckBox fx:id="oneTryCheckBox" mnemonicParsing="false" onMouseClicked="#handleIdSelectionChange" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                      </children>
                   </GridPane>
-                  <Button fx:id="startButton" layoutX="14.0" layoutY="557.0" mnemonicParsing="false" onMouseClicked="#handleStartClick" text="Start" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
-                  <Button layoutX="65.0" layoutY="759.0" mnemonicParsing="false" onMouseClicked="#handleMonteCarloClick" text="McHammer" />
+                  <Button fx:id="startButton" layoutX="16.0" layoutY="726.0" mnemonicParsing="false" onMouseClicked="#handleStartClick" text="Start" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="16.0" />
+                  <Button layoutX="16.0" layoutY="759.0" mnemonicParsing="false" onMouseClicked="#handleMonteCarloClick" text="McHammer" />
+                  <Button layoutX="102.0" layoutY="759.0" mnemonicParsing="false" onMouseClicked="#handleStop" text="Stop" />
                </children>
             </AnchorPane>
           <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="850.0">

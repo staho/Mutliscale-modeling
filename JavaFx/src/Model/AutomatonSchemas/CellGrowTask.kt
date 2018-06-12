@@ -12,9 +12,11 @@ import kotlin.concurrent.thread
 class CellGrowTask(var gc: GraphicsContext, var grid: Grid) : Runnable{
     val width = gc.canvas.width
     val height = gc.canvas.height
+    @Volatile var running = true
 
     override fun run() {
         updateFromGrid()
+        println("CellGrowTask has ended on thread: ${Thread.currentThread().id}")
 
     }
 
@@ -30,13 +32,14 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid) : Runnable{
             gc.fill = Color.WHITE
 
 
-        while(x){
+        while(x && running){
             grid.cells.forEachIndexed { i, cellsRow ->
                     cellsRow.forEachIndexed { j, cell ->
                         if (cell.state) {
                             val indexes = nb.computeIndexes(i, j)
                             for (index in indexes) {
                                 val curCell = grid.cells[index.x][index.y]
+
                                 if (!curCell.state) {
                                     curCell.newState = true
                                     curCell.color = cell.color
@@ -45,7 +48,6 @@ class CellGrowTask(var gc: GraphicsContext, var grid: Grid) : Runnable{
 
                                     grid.cellsCounter[cell.ID] = grid.cellsCounter[cell.ID]!!.plus(1)
 
-                                    println("Cell id=${cell.ID}: ${grid.cellsCounter[cell.ID]}")
                                     grid.cellsToUpdate.add(curCell)
                                 }
                             }

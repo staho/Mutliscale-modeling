@@ -1,7 +1,7 @@
 package Controller.ViewControllers
 
 import Model.AutomatonSchemas.CellGrowTask
-import Model.AutomatonSchemas.MonteCarlo
+import Model.AutomatonSchemas.MonteCarloTask
 import Model.Base.Color
 import Model.Base.Grid
 import Model.Base.McPreferences
@@ -12,7 +12,6 @@ import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
 import javafx.scene.canvas.Canvas
 import javafx.scene.control.CheckBox
-import javafx.scene.control.RadioButton
 import javafx.scene.control.TextField
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
@@ -22,6 +21,7 @@ import java.util.*
 class MainLayoutController {
 
     private val neighbourTypes: List<String> = listOf("Moore", "Von Neumann",  "Pentagonal L", "Pentagonal R", "Hexagonal L", "Hexagonal R")
+    private val idChooseTypes: List<String> = listOf("Neighbour", "Grid")
 
     @FXML
     private lateinit var neighbourCombo: ComboBox<String>
@@ -30,22 +30,27 @@ class MainLayoutController {
     private lateinit var randomizationType: ComboBox<String>
 
     @FXML
-    private lateinit var boundaryCondition: ComboBox<String>
-
-    @FXML
     private lateinit var canvas: Canvas
 
     private lateinit var grid: Grid
 
     private lateinit var cellGrowTask: CellGrowTask
+    private lateinit var monteCarloTask: MonteCarloTask
     private lateinit var neighbourhood: NeighbourHoodInterface
     private var bcs: Boolean = true
+    private var mcPreferences: McPreferences = McPreferences()
+
+    @FXML
+    private lateinit var idChooseComboBox: ComboBox<String>
 
     @FXML
     private lateinit var xTextField: TextField
 
     @FXML
     private lateinit var bcsCheckBox: CheckBox
+
+    @FXML
+    private lateinit var oneTryCheckBox: CheckBox
 
     @FXML
     private lateinit var yTextField: TextField
@@ -58,6 +63,7 @@ class MainLayoutController {
         initComboboxes()
 
         bcsCheckBox.isSelected = true
+        oneTryCheckBox.isSelected = mcPreferences.oneTry
 
         val gc = canvas.graphicsContext2D
         gc.clearRect(0.0,0.0, canvas.width, canvas.height)
@@ -98,6 +104,9 @@ class MainLayoutController {
     fun initComboboxes() {
         neighbourCombo.items.addAll(neighbourTypes)
         neighbourCombo.selectionModel.selectFirst()
+
+        idChooseComboBox.items.addAll(idChooseTypes)
+        idChooseComboBox.selectionModel.select(1)
     }
 
     @FXML
@@ -113,10 +122,17 @@ class MainLayoutController {
 
     @FXML
     fun handleMonteCarloClick() {
-        val mctask = MonteCarlo(canvas.graphicsContext2D, grid, McPreferences(false, true))
-        val thread = Thread(mctask)
+
+        monteCarloTask = MonteCarloTask(canvas.graphicsContext2D, grid, mcPreferences)
+        val thread = Thread(monteCarloTask)
 
         thread.start()
+    }
+
+    @FXML
+    fun handleStop() {
+        monteCarloTask.running = false
+        cellGrowTask.running = false
     }
 
     @FXML
@@ -215,6 +231,20 @@ class MainLayoutController {
     fun handleBcsChange(){
         bcs = bcsCheckBox.isSelected
         handleNbChoose()
+    }
+
+    @FXML
+    fun handleIdSelectionChange(){
+        val index = idChooseComboBox.selectionModel.selectedIndex
+        when(index) {
+            0 -> mcPreferences.chooseMaxNb = true
+            1 -> mcPreferences.chooseMaxNb = false
+        }
+    }
+
+    @FXML
+    fun handleOneTryChange(){
+        mcPreferences.oneTry = oneTryCheckBox.isSelected
     }
 
 
