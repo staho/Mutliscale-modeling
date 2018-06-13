@@ -33,12 +33,12 @@ class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Do
     }
 
     fun addCell(i: Int, j: Int, color: Color, state: Boolean = true): Cell {
-        val cell = this.cells[i][j]
+        val cell = cells[i][j]
         cell.state = state
         cell.color = color
-        cell.ID = this.cellsCounter.size
-        this.cellsCounter[cell.ID] = 1
-        this.cellIdToColor[cell.ID] = color
+        cell.ID = cellsCounter.size
+        cellsCounter[cell.ID] = 1
+        cellIdToColor[cell.ID] = color
 
         return cell
     }
@@ -46,9 +46,24 @@ class Grid(var nXCells: Int, var nYCells: Int, val width: Double, val height: Do
     fun addCell(cell: Cell, color: Color, state: Boolean = true) {
         cell.state = state
         cell.color = color
-        cell.ID = this.cellsCounter.size
-        this.cellsCounter[cell.ID] = 1
-        this.cellIdToColor[cell.ID] = color
+        cell.ID = cellsCounter.size
+        cellsCounter[cell.ID] = 1
+        cellIdToColor[cell.ID] = color
+
+    }
+
+    fun addCellWithId(cell: Cell, id: Int, state: Boolean = true) {
+        cell.state = state
+        cell.color = cellIdToColor[id]!!
+        cell.ID = id
+
+        if(cellsCounter.containsKey(cell.ID)){
+            cellsCounter[cell.ID] = cellsCounter[cell.ID]!!.plus(1)
+
+        } else {
+            cellsCounter[cell.ID] = 1
+//            cellIdToColor[cell.ID] = color
+        }
 
     }
 

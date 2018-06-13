@@ -7,6 +7,7 @@ import Model.Base.Grid
 import Model.Base.McPreferences
 import Model.Interfaces.NeighbourHoodInterface
 import Model.NeighbourHood.MooreNeighbourhood
+import Model.NeighbourHood.PentagonalNeighbourhood
 import Model.NeighbourHood.VonNeumann
 import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
@@ -217,6 +218,12 @@ class MainLayoutController {
                 1 -> {
                     grid.neighbourhood = VonNeumann(xNo, yNo, bcs)
                 }
+                2->{
+                    grid.neighbourhood = PentagonalNeighbourhood(xNo, yNo, bcs, true)
+                }
+                3->{
+                    grid.neighbourhood = PentagonalNeighbourhood(xNo, yNo, bcs, false)
+                }
             }
             neighbourhood = grid.neighbourhood
 
@@ -245,6 +252,21 @@ class MainLayoutController {
     @FXML
     fun handleOneTryChange(){
         mcPreferences.oneTry = oneTryCheckBox.isSelected
+    }
+
+    @FXML
+    fun mcHammerStart() {
+        try {
+            var randNo = randomizeField.text.toInt()
+            monteCarloTask = MonteCarloTask(canvas.graphicsContext2D, grid, mcPreferences)
+            monteCarloTask.randomizeGrid(randNo)
+            val thread = Thread(monteCarloTask)
+
+            thread.start()
+
+        } catch (e: Exception){}
+
+
     }
 
 

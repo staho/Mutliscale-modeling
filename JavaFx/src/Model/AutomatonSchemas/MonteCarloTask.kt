@@ -14,6 +14,7 @@ class MonteCarloTask(var gc: GraphicsContext, var grid: Grid, val prefs: McPrefe
     private val width = gc.canvas.width
     private val height = gc.canvas.height
     @Volatile var running = true
+    var enableIterator = false
 
     override fun run() {
         monteCarlo()
@@ -29,9 +30,14 @@ class MonteCarloTask(var gc: GraphicsContext, var grid: Grid, val prefs: McPrefe
         val g2d = bi.createGraphics()
         g2d.background = java.awt.Color.WHITE
         gc.fill = Color.WHITE
+        var iterator = 0
+
+        if (prefs.noOfIteration > 0) {
+            enableIterator = true
+        }
 
 
-        while(x && running){
+        mainLoop@while(x && running){
             grid.cells.forEachIndexed { i, cellsRow ->
                 cellsRow.forEachIndexed { j, cell ->
                     val indexes = nb.computeIndexes(i, j)
@@ -75,6 +81,10 @@ class MonteCarloTask(var gc: GraphicsContext, var grid: Grid, val prefs: McPrefe
             gc.drawImage(SwingFXUtils.toFXImage(bi, null), 0.0, 0.0)
             grid.cellsToUpdate.clear()
 
+            if(enableIterator) {
+                iterator++
+                if (iterator >= prefs.noOfIteration) break@mainLoop
+            }
         }
 
     }
@@ -116,6 +126,21 @@ class MonteCarloTask(var gc: GraphicsContext, var grid: Grid, val prefs: McPrefe
 
         } else {
             return random.nextInt(grid.cellsCounter.size)
+        }
+    }
+
+    fun randomizeGrid(noOfSeeds: Int) {
+        val rand = Random()
+
+        for(i in 0 until noOfSeeds){
+            grid.cellIdToColor[i] = Model.Base.Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255))
+        }
+
+
+        for(cells in grid.cells){
+            for(cell in cells){
+                grid.addCellWithId(cell, rand.nextInt(noOfSeeds))
+            }
         }
     }
 }
