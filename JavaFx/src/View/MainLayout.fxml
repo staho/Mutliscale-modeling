@@ -75,7 +75,7 @@
                         <Label text="ID choose" GridPane.rowIndex="5" />
                         <Label text="One try" GridPane.rowIndex="6" />
                         <CheckBox fx:id="oneTryCheckBox" mnemonicParsing="false" onMouseClicked="#handleIdSelectionChange" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <TextField fx:id="iterationTextField" onKeyReleased="#handleIterationsChange" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <Label text="Iterations" GridPane.rowIndex="7" />
                      </children>
                   </GridPane>

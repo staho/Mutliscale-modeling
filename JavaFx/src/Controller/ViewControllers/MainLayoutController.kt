@@ -60,6 +60,9 @@ class MainLayoutController {
     private lateinit var randomizeField: TextField
 
     @FXML
+    private lateinit var iterationTextField: TextField
+
+    @FXML
     fun initialize() {
         initComboboxes()
 
@@ -132,8 +135,8 @@ class MainLayoutController {
 
     @FXML
     fun handleStop() {
-        monteCarloTask.running = false
-        cellGrowTask.running = false
+        monteCarloTask?.running = false
+        cellGrowTask?.running = false
     }
 
     @FXML
@@ -257,7 +260,7 @@ class MainLayoutController {
     @FXML
     fun mcHammerStart() {
         try {
-            var randNo = randomizeField.text.toInt()
+            val randNo = randomizeField.text.toInt()
             monteCarloTask = MonteCarloTask(canvas.graphicsContext2D, grid, mcPreferences)
             monteCarloTask.randomizeGrid(randNo)
             val thread = Thread(monteCarloTask)
@@ -267,6 +270,16 @@ class MainLayoutController {
         } catch (e: Exception){}
 
 
+    }
+
+    @FXML
+    fun handleIterationsChange() {
+        try {
+            mcPreferences.noOfIteration = iterationTextField.text.toInt()
+
+        } catch (e: Exception) {
+            mcPreferences.noOfIteration = -1
+        }
     }
 
 
