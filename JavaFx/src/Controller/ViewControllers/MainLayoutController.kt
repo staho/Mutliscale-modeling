@@ -221,10 +221,10 @@ class MainLayoutController {
                 1 -> {
                     grid.neighbourhood = VonNeumann(xNo, yNo, bcs)
                 }
-                2->{
+                2 -> {
                     grid.neighbourhood = PentagonalNeighbourhood(xNo, yNo, bcs, true)
                 }
-                3->{
+                3 -> {
                     grid.neighbourhood = PentagonalNeighbourhood(xNo, yNo, bcs, false)
                 }
             }

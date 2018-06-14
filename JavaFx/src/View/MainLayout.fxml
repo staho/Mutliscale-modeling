@@ -8,9 +8,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ViewControllers.MainLayoutController">
    <children>
-      <SplitPane dividerPositions="0.23273942093541203" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.18336673346693386" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane maxWidth="180.0" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1000.0">
+          <AnchorPane maxWidth="200.0" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1000.0">
                <children>
                   <VBox prefHeight="62.0" prefWidth="180.0">
                      <children>
@@ -80,9 +80,9 @@
                      </children>
                   </GridPane>
                   <Button fx:id="startButton" layoutX="16.0" layoutY="726.0" mnemonicParsing="false" onMouseClicked="#handleStartClick" text="Start" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="16.0" />
-                  <Button layoutX="16.0" layoutY="759.0" mnemonicParsing="false" onMouseClicked="#handleMonteCarloClick" text="McHammer" />
-                  <Button layoutX="102.0" layoutY="759.0" mnemonicParsing="false" onMouseClicked="#handleStop" text="Stop" />
-                  <Button layoutX="64.0" layoutY="726.0" mnemonicParsing="false" onMouseClicked="#mcHammerStart" text="McHammer Start" />
+                  <Button layoutX="18.0" layoutY="759.0" mnemonicParsing="false" onMouseClicked="#handleMonteCarloClick" text="McHammer" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="18.0" />
+                  <Button layoutX="102.0" layoutY="759.0" mnemonicParsing="false" onMouseClicked="#handleStop" text="Stop" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="102.0" />
+                  <Button layoutX="69.0" layoutY="726.0" mnemonicParsing="false" onMouseClicked="#mcHammerStart" text="McHammer Start" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="69.0" />
                </children>
             </AnchorPane>
           <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="850.0">
